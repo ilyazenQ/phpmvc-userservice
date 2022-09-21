@@ -1,0 +1,5 @@
+Зайти в контейнер
+docker exec -it project_app bash
+
+Разрешения - sudo chmod -R 777 storage && sudo chmod -R 777 bootstrap/cache
+
