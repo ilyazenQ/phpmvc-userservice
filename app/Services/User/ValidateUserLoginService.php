@@ -5,6 +5,7 @@ namespace App\Services\User;
 use App\App;
 use App\Services\User\Actions\SanitizeInputLoginDataAction;
 use App\Services\Validator;
+use Exception;
 
 class ValidateUserLoginService implements Validator
 {
@@ -36,21 +37,31 @@ class ValidateUserLoginService implements Validator
         }
     }
 
-    private function checkIfUserExists()
+    private function checkIfUserExists($field)
     {
-        $phoneFromDbQuery = $this->db->query('SELECT * FROM `users` WHERE `phone` = ' . $this->data['phone']);
+        $phoneFromDbQuery = $this->db->query("SELECT * FROM users WHERE $field = " ."'".$this->data['field']."'");
         if (empty($phoneFromDbQuery->fetch())) {
             $this->message = 'Пользователя не существует';
             $this->status = false;
         }
     }
-    private function checkPassword()
+
+    private function checkPassword($field)
     {
-        $phoneFromDbQuery = $this->db->query('SELECT * FROM `users` WHERE `phone` = ' . $this->data['phone']);
+        $phoneFromDbQuery = $this->db->query("SELECT * FROM users WHERE $field = " ."'".$this->data['field']."'");
         $user = $phoneFromDbQuery->fetch();
-        if($user['password'] !== md5($this->data['password'])) {
+        if ($user['password'] !== md5($this->data['password'])) {
             $this->message = 'Не верный пароль';
             $this->status = false;
+        }
+    }
+
+    public function getInputField()
+    {
+        if (filter_var($this->data['field'], FILTER_VALIDATE_EMAIL)) {
+            return 'email';
+        } else {
+            return 'phone';
         }
     }
 
@@ -60,31 +71,32 @@ class ValidateUserLoginService implements Validator
 
         if ($this->status === false) {
             return [
-                'message'=>$this->message,
+                'message' => $this->message,
                 'status' => $this->status,
             ];
         }
 
-        $this->checkIfUserExists();
+
+        $this->checkIfUserExists($this->getInputField());
 
         if ($this->status === false) {
             return [
-                'message'=>$this->message,
+                'message' => $this->message,
                 'status' => $this->status,
             ];
         }
 
-        $this->checkPassword();
+        $this->checkPassword($this->getInputField());
 
         if ($this->status === false) {
             return [
-                'message'=>$this->message,
+                'message' => $this->message,
                 'status' => $this->status,
             ];
         }
 
         return [
-            'message'=>$this->message,
+            'message' => $this->message,
             'status' => $this->status,
         ];
     }

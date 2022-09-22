@@ -4,7 +4,7 @@
             <h1>Форма входа</h1>
             <h2><? echo $this->params['message']; ?></h2>
             <form action="/login" method="post">
-                <input type="text" name="phone" required class="form-control" id="name" placeholder="Phone"><br>
+                <input type="text" name="phone" required class="form-control" id="name" placeholder="Phone or email"><br>
                 <input type="password" name="password" class="form-control" id="pass" placeholder="Password"><br>
                 <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
                 <button class="btn btn-success">Войти</button><br>

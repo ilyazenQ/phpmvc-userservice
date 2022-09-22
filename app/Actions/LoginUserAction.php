@@ -4,6 +4,7 @@ namespace App\Actions;
 
 use App\App;
 use App\Services\User\Actions\SanitizeInputLoginDataAction;
+use App\Services\User\ValidateUserLoginService;
 
 class LoginUserAction
 {
@@ -15,7 +16,9 @@ class LoginUserAction
     public function execute()
     {
         $data = SanitizeInputLoginDataAction::execute();
-        $phoneFromDbQuery = $this->db->query('SELECT * FROM `users` WHERE `phone` = ' . $data['phone']);
+        $field = (new ValidateUserLoginService())->getInputField();
+        $phoneFromDbQuery = $this->db->query("SELECT * FROM users WHERE $field = " ."'".$data['field']."'");
+
         $user = $phoneFromDbQuery->fetch();
         setcookie('user', $user['id'], time() + 3600, "/");
         return $user;

@@ -40,7 +40,7 @@ class ValidateService implements Validator
 
     protected function checkIfFieldAlreadyExist($data, $fieldName)
     {
-        $fromDbQuery = $this->db->query('SELECT * FROM `users` WHERE `name` = ' . $data[$fieldName]);
+        $fromDbQuery = $this->db->query("SELECT * FROM users WHERE $fieldName = " ."'". $data[$fieldName]."'");
         if (!empty($fromDbQuery->fetch())) {
             $this->message = 'Пользователь с такими полями уже зарегистрирован';
             $this->status = false;

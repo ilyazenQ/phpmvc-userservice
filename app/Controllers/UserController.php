@@ -52,7 +52,7 @@ class UserController
 
     public function auth()
     {
-        $message = 'Войдите используя телефон и пароль';
+        $message = 'Войдите используя телефон или емаил и пароль';
         return View::make('user/auth', [
             'message' => $message,
         ])->render(true);
