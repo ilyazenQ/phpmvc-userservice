@@ -12,12 +12,12 @@ class HomeController
     public function check()
     {
         $s = "123'";
-        echo "200 OK";
+        echo "200 OK 123";
     }
 
     public function checkAPI()
     {
-        echo "API OK";
+        echo "API OK 123";
     }
 
     public function store()
