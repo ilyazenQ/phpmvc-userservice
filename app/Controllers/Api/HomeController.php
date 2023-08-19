@@ -16,7 +16,7 @@ class HomeController
 
     public function checkAPI()
     {
-        echo "API OK";
+        echo "API OK 123";
     }
 
     public function store()
