@@ -11,7 +11,7 @@ class HomeController
 {
     public function check()
     {
-        echo "200 OK";
+        echo "200 OK 123";
     }
 
     public function checkAPI()
