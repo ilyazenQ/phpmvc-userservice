@@ -11,6 +11,7 @@ class HomeController
 {
     public function check()
     {
+        $s = "123'";
         echo "200 OK 123";
     }
 
